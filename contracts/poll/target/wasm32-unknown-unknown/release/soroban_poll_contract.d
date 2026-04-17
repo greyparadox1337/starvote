@@ -1,0 +1,1 @@
+/Users/garvit/Desktop/untitled\ folder/starvote/contracts/poll/target/wasm32-unknown-unknown/release/soroban_poll_contract.wasm: /Users/garvit/Desktop/untitled\ folder/starvote/contracts/poll/src/lib.rs
