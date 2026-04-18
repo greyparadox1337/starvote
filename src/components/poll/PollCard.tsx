@@ -45,15 +45,21 @@ export const PollCard = () => {
       </div>
 
       <div className="grid gap-3">
-        {options.map((opt, i) => (
-          <VoteOption 
-            key={i} 
-            index={i} 
-            text={opt} 
-            disabled={hasVoted || !publicKey} 
-            hasVoted={hasVoted}
-          />
-        ))}
+        {options.length === 0 ? (
+          <div className="rounded-2xl border border-white/10 p-6 text-white/70 bg-white/5">
+            No poll options found. Please configure a valid contract ID with <code className="rounded bg-white/10 px-1 py-0.5">VITE_CONTRACT_ID</code>.
+          </div>
+        ) : (
+          options.map((opt, i) => (
+            <VoteOption 
+              key={i} 
+              index={i} 
+              text={opt} 
+              disabled={hasVoted || !publicKey} 
+              hasVoted={hasVoted}
+            />
+          ))
+        )}
       </div>
 
       <motion.div 

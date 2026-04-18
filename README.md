@@ -10,9 +10,8 @@ StarVote allows users to participate in transparent, immutable, and on-chain pol
 
 ## 📸 Screenshots
 
-![StarVote Home]()
-![StarVote Wallet Connection]()
-![StarVote Real-time Results]()
+![StarVote Overview](public/screenshots/starvote-overview.png)
+
 
 **Live Demo**: [Will be deployed to Vercel soon]()
 
@@ -74,8 +73,9 @@ Ensure you have the Rust toolchain installed, `soroban-cli` set up, and an accou
      --options '["Stellar", "Ethereum", "Solana", "Polkadot"]'
    ```
 
-**Deployed Contract Address**: `CXXXXXXX...`
-**Transaction Hash**: [`0x...`](https://stellar.expert/explorer/testnet/tx/0x...)
+**Deployed Contract Address**: `CB64QXAYTZ6MEFENXBDX3QLRGA7V7EYVQ775KLFQQSVQYQJKQ6Q3D6I7`
+**Transaction Hash**: [`ac097c640e4d0b30b5f2d828962eedb66e2e7cecf890444abe20c376972d4b4e`](https://stellar.expert/explorer/testnet/tx/ac097c640e4d0b30b5f2d828962eedb66e2e7cecf890444abe20c376972d4b4e)
+
 
 ## ⚙️ Environment Variables (`.env.example`)
 

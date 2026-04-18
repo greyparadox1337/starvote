@@ -5,10 +5,16 @@ import { rpcServer, getAccountForTx, networkPassphrase } from './stellar';
 import { ContractError, AlreadyVotedError } from './errors';
 import { signTransaction } from './walletsKit';
 
-const contract = new Contract(CONTRACT_ID);
+const getContract = () => {
+  if (!CONTRACT_ID) {
+    throw new ContractError('Contract ID is not configured. Please set VITE_CONTRACT_ID.');
+  }
+  return new Contract(CONTRACT_ID);
+};
 
 export const readPollData = async () => {
   try {
+    const contract = getContract();
     const questionBuilder = contract.call('get_question');
     const resultsBuilder = contract.call('get_results');
     const totalVotesBuilder = contract.call('get_total_votes');
@@ -62,12 +68,18 @@ export const readPollData = async () => {
     return { question, results, totalVotes, options };
   } catch (error) {
     console.error("Error reading poll data:", error);
-    throw new ContractError("Failed to fetch poll data from contract.");
+    return {
+      question: 'Contract not configured',
+      options: [],
+      results: {},
+      totalVotes: 0,
+    };
   }
 };
 
 export const checkHasVoted = async (publicKey: string) => {
   try {
+    const contract = getContract();
     const tempAccount = await getAccountForTx(publicKey).catch(() => {
         return { sequenceNumber: () => '0', accountId: () => publicKey };
     }) as any;
@@ -92,6 +104,7 @@ export const checkHasVoted = async (publicKey: string) => {
 export const castVote = async (publicKey: string, optionIndex: number) => {
   const account = await getAccountForTx(publicKey);
   
+  const contract = getContract();
   const voteOp = contract.call(
     'vote',
     new Address(publicKey).toScVal(),
@@ -125,6 +138,11 @@ export const castVote = async (publicKey: string, optionIndex: number) => {
 };
 
 export const subscribeToEvents = (onEvent: (event: any) => void) => {
+  if (!CONTRACT_ID) {
+    console.warn('Skipping event subscription because contract ID is not configured.');
+    return;
+  }
+
   let lastCursor = "";
   const poll = async () => {
     try {
